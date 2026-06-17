@@ -14,6 +14,16 @@ Route::get('/', function () {
 | LOGIN PAGE
 |--------------------------------------------------------------------------
 */
+
+
+Route::get('/check-db', function () {
+
+    return [
+        'database' => DB::connection()->getDatabaseName(),
+        'tables' => DB::select('SHOW TABLES')
+    ];
+
+});
 Route::get('/create-tables', function () {
 
     Artisan::call('migrate --force');
