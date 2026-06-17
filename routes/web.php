@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActivityController;
-use Illuminate\Support\Facades\Artisan;
+
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -14,11 +14,7 @@ Route::get('/', function () {
 | LOGIN PAGE
 |--------------------------------------------------------------------------
 */
-Route::get('/migrate', function () {
-    Artisan::call('migrate --force');
 
-    return "Migration done";
-});
 
 Route::post('/activities', [ActivityController::class, 'store'])
     ->middleware('admin.auth');
