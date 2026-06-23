@@ -112,9 +112,9 @@
 <div class="auth-card">
 
 
-<h2 style="color: #4f46e5; font-size: 30px; text-align: center;">
-    PPATH
-</h2>
+<div style="text-align:center;">
+    <img src="{{ asset('ppa1.png') }}" alt="PPATH Logo" width="150">
+</div>
 
 @if(session('success'))
     <div class="success-box">
