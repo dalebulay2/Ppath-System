@@ -355,7 +355,10 @@ if (emptyState) {
     <input
         type="date"
         class="activity-date border p-2 rounded w-56 mt-2">
-
+<input
+    type="text"
+    placeholder="Created By"
+    class="activity-author border p-2 rounded w-56 mt-2">
 </div>
 </div>
 
@@ -429,11 +432,13 @@ function confirmTitle(button) {
 const title = tableBlock.querySelector('.activity-title').value.trim();
 
 const date = tableBlock.querySelector('.activity-date').value;
-   if (!title || !date) {
+
+const author = tableBlock.querySelector('.activity-author').value.trim();
+
+if (!title || !date || !author) {
     Swal.fire({
     icon: 'warning',
-   
-    text: 'Please enter Title and a Date.',
+    text: 'Please enter Title, Date and Author.',
     timer: 1500,
     showConfirmButton: false
 });
@@ -490,6 +495,10 @@ titleSection.innerHTML = `
 
         <p class="text-sm text-gray-500 mt-1">
             ${formattedDate}
+        </p>
+
+        <p class="text-sm text-blue-600">
+            Created by: ${author}
         </p>
     </div>
 `;
