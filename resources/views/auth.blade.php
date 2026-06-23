@@ -113,8 +113,10 @@
 
 
 
-  <div style="text-align:center;">
-    <img src="{{ asset('ppa1.png') }}" alt="PPATH Logo" width="150">
+ <div style="text-align:center;">
+    <img src="/ppa1.png"
+         alt="PPATH Logo"
+         style="width:150px; height:auto;">
 </div>
 
 
