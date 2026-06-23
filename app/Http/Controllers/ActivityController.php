@@ -14,10 +14,11 @@ class ActivityController extends Controller
             'date'  => 'required|date'
         ]);
 
-        $activity = Activity::create([
-            'title' => $validated['title'],
-            'date'  => $validated['date']
-        ]);
+       $activity = Activity::create([
+    'title' => $validated['title'],
+    'date' => $validated['date'],
+    'author' => $request->author
+]);
 
         return response()->json([
             'success' => true,
