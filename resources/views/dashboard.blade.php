@@ -130,13 +130,9 @@
 
       <div class="flex items-center gap-2">
     
-    <!-- PPATH -->
-    <span class="text-3xl font-bold text-indigo-600">
-        PPATH
-    </span>
-
-    <!-- LOGO -->
-    <img src="svg.png" alt="Logo" class="h-12 w-12 object-contain">
+    <div style="text-align:center;">
+  <img src="/ppa1.png" alt="PPATH Logo" style="width:250px; height:auto;">
+</div>
 
     <!-- SEPARATOR + TEXT -->
     <span class="text-white text-lg ml-2">
