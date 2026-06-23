@@ -113,7 +113,9 @@
 
 
 <div style="text-align:center;">
-   <link rel="icon" href="/ppa1.png?v=3">
+  <div style="text-align:center;">
+    <img src="{{ asset('ppa1.png') }}" alt="PPATH Logo" width="150">
+</div>
 </div>
 
 @if(session('success'))
