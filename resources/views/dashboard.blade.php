@@ -194,6 +194,9 @@
     <p class="text-sm text-gray-500 mt-1">
         {{ \Carbon\Carbon::parse($activity->date)->format('F d, Y') }}
     </p>
+       <p class="text-sm text-blue-600">
+    Created by: {{ $activity->author }}
+</p>
 </div>
 
     
