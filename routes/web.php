@@ -169,7 +169,7 @@ Route::get('/delete-admin/{id}', function ($id) {
 })->middleware(['admin.auth', 'super.admin']);
 Route::post('/admin/reset-password/{id}', [AuthController::class, 'resetPassword']);
 
-use Illuminate\Support\Facades\DB;
+
 
 
 Route::get('/scanner', function () {
