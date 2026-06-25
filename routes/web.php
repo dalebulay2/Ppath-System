@@ -181,3 +181,30 @@ Route::get('/scanner', function () {
     return view('scanner', compact('activities'));
 
 });
+
+
+
+Route::post('/scanner/save', function (Request $request) {
+
+    DB::table('attendees')->insert([
+
+        'activity_id' => $request->activity_id,
+
+        'name' => $request->name,
+
+        'gender' => $request->gender,
+
+        'created_at' => now(),
+
+        'updated_at' => now()
+
+    ]);
+
+
+    return response()->json([
+
+        'success' => true
+
+    ]);
+
+});
