@@ -186,6 +186,12 @@ Route::get('/scanner', function () {
 
 Route::post('/scanner/save', function (Request $request) {
 
+    $request->validate([
+        'activity_id' => 'required',
+        'name' => 'required',
+        'gender' => 'required'
+    ]);
+
     DB::table('attendees')->insert([
 
         'name' => $request->name,
