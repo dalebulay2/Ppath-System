@@ -24,7 +24,6 @@
 
     </select>
 
-
     <br><br>
 
     <div id="reader"></div>
@@ -32,27 +31,67 @@
 
     <script>
 
-        function onScanSuccess(decodedText) {
+    function onScanSuccess(decodedText) {
 
-            alert("Scanned: " + decodedText);
+        let activity_id = document.getElementById('activity_id').value;
 
-        }
+        let data = decodedText.split('|');
+
+        let name = data[0];
+        let gender = data[1];
 
 
-        let html5QrcodeScanner = new Html5QrcodeScanner(
+        fetch('/scanner/save', {
 
-            "reader",
+            method: 'POST',
 
-            {
-                fps: 10,
-                qrbox: 250
+            headers: {
+
+                'Content-Type': 'application/json',
+
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+
+            },
+
+            body: JSON.stringify({
+
+                activity_id: activity_id,
+                name: name,
+                gender: gender
+
+            })
+
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if(data.success){
+
+                alert('Attendance Recorded Successfully');
+
             }
 
-        );
+        });
+
+    }
 
 
-        html5QrcodeScanner.render(onScanSuccess);
 
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+
+        "reader",
+
+        {
+            fps: 10,
+            qrbox: 250
+        }
+
+    );
+
+
+    html5QrcodeScanner.render(onScanSuccess);
 
     </script>
 
