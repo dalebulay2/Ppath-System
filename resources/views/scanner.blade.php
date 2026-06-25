@@ -71,7 +71,7 @@ function onScanSuccess(decodedText) {
 
     })
 
-   .then(async response => {
+  .then(async response => {
 
     let text = await response.text();
 
@@ -80,6 +80,22 @@ function onScanSuccess(decodedText) {
     alert(text);
 
     return JSON.parse(text);
+
+})
+
+.then(data => {
+
+    console.log(data);
+
+    if(data.success){
+
+        alert('Attendance Recorded Successfully');
+
+    }else{
+
+        alert(data.message);
+
+    }
 
 })
 
