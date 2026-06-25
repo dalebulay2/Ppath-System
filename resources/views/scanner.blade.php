@@ -38,10 +38,10 @@ function onScanSuccess(decodedText) {
 
     let activity_id = document.getElementById('activity_id').value;
 
-    let data = decodedText.split('|');
+    let data = decodedText.split(/[\/|]/);
 
     // Check if QR format is correct
-    if(data.length < 2){
+    if(data.length !== 2){
         alert("Invalid QR Format!\nExpected: Name|Gender");
         return;
     }
