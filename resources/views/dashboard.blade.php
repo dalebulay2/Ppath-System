@@ -242,13 +242,45 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td colspan="5" class="text-center">
-                            No attendees yet
-                        </td>
-                    </tr>
-                </tbody>
+              <tbody>
+
+@php
+    $count = 1;
+@endphp
+
+
+@forelse($attendees->where('activity_id', $activity->id) as $attendee)
+
+<tr>
+
+    <td>{{ $count++ }}</td>
+
+    <td>{{ $attendee->name }}</td>
+
+    <td>{{ $attendee->gender }}</td>
+
+    <td>{{ $attendee->age }}</td>
+
+    <td>{{ $attendee->category }}</td>
+
+</tr>
+
+@empty
+
+<tr>
+
+    <td colspan="5" class="text-center">
+
+        No attendees yet
+
+    </td>
+
+</tr>
+
+@endforelse
+
+
+</tbody>
 
             </table>
             <br>
