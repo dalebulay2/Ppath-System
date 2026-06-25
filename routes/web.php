@@ -186,24 +186,31 @@ Route::get('/scanner', function () {
 
 Route::post('/scanner/save', function (Request $request) {
 
-    $request->validate([
-        'activity_id' => 'required',
-        'name' => 'required',
-        'gender' => 'required'
-    ]);
+    try {
 
-    DB::table('attendees')->insert([
+        DB::table('attendees')->insert([
 
-        'name' => $request->name,
-        'gender' => $request->gender,
-        'age' => null,
-        'category' => null,
-        'activity_id' => $request->activity_id
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'age' => null,
+            'category' => null,
+            'activity_id' => $request->activity_id
 
-    ]);
+        ]);
 
-    return response()->json([
-        'success' => true
-    ]);
+        return response()->json([
+            'success' => true
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+
+            'success' => false,
+            'message' => $e->getMessage()
+
+        ]);
+
+    }
 
 });
