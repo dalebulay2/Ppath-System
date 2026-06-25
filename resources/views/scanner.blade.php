@@ -71,7 +71,17 @@ function onScanSuccess(decodedText) {
 
     })
 
-    .then(response => response.json())
+   .then(async response => {
+
+    let text = await response.text();
+
+    console.log(text);
+
+    alert(text);
+
+    return JSON.parse(text);
+
+})
 
     .then(data => {
 
@@ -91,11 +101,11 @@ function onScanSuccess(decodedText) {
 
     .catch(error => {
 
-        console.log(error);
+    console.log(error);
 
-        alert('Error saving attendance.');
+    alert("Error:\n" + error);
 
-    });
+});
 
 }
 
