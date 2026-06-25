@@ -5,7 +5,7 @@
 </head>
 <body>
 
-   <h1>PPATH QR Scanner</h1>
+  <h1>PPATH QR Scanner</h1>
 
 <h3>Select Attendance Table</h3>
 
