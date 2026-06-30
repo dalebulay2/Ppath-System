@@ -581,7 +581,7 @@ titleSection.innerHTML = `
 }
 
 </script>
-       <script>
+      <script>
 
 async function loadAttendance(activityId) {
 
@@ -590,7 +590,6 @@ async function loadAttendance(activityId) {
         const response = await fetch(`/attendance/live/${activityId}`);
         const data = await response.json();
 
-        // 1. UPDATE TABLE
         let tbody = document.getElementById(`attendance-${activityId}`);
 
         if (tbody) {
@@ -615,7 +614,6 @@ async function loadAttendance(activityId) {
                 });
 
             } else {
-
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="5" class="text-center text-gray-400 py-6">
@@ -626,7 +624,6 @@ async function loadAttendance(activityId) {
             }
         }
 
-        // 2. UPDATE TOTAL
         let totalBox = document.getElementById(`total-${activityId}`);
         let maleBox = document.getElementById(`male-${activityId}`);
         let femaleBox = document.getElementById(`female-${activityId}`);
@@ -636,19 +633,25 @@ async function loadAttendance(activityId) {
         if (femaleBox) femaleBox.innerHTML = `Female: ${data.female}`;
 
     } catch (error) {
-        console.error("Live update error:", error);
+        console.error(error);
     }
 }
 
 
-// RUN EVERY 2 SECONDS
-setInterval(() => {
+// 🚀 SINGLE CONTROL LOOP (IMPORTANT FIX)
+function initLiveUpdate() {
 
     @foreach($activities as $activity)
         loadAttendance({{ $activity->id }});
     @endforeach
 
-}, 2000);
+}
+
+// run immediately
+initLiveUpdate();
+
+// run continuously
+setInterval(initLiveUpdate, 2000);
 
 </script>
     
