@@ -185,14 +185,14 @@ document.getElementById("startBtn").addEventListener("click", async () => {
             return;
         }
 
-        await html5QrCode.start(
-            cameras[0].id,
-            {
-                fps: 10,
-                qrbox: 250
-            },
-            onScanSuccess
-        );
+      await html5QrCode.start(
+    { facingMode: "environment" },
+    {
+        fps: 10,
+        qrbox: 250
+    },
+    onScanSuccess
+);
 
         document.getElementById("startBtn").style.display = "none";
         document.getElementById("stopBtn").style.display = "inline-block";
