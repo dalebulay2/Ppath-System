@@ -210,21 +210,7 @@ Route::post('/scanner/save', function (Request $request) {
             'message' => $e->getMessage()
 
         ]);
-Route::middleware(['auth'])->group(function () {
 
-    Route::post('/scanner/token', function () {
-        $token = \Illuminate\Support\Str::random(40);
-
-        session(['scanner_token' => $token]);
-
-        return response()->json([
-            'token' => $token
-        ]);
-    });
-
-    Route::get('/scanner', [ScannerController::class, 'index']);
-    Route::post('/scanner/save', [ScannerController::class, 'save']);
-});
     }
 
 });
