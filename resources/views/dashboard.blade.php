@@ -641,16 +641,13 @@ async function loadAttendance(activityId) {
 }
 <script>
 
-function initLiveUpdate() {
+setInterval(() => {
+
     @foreach($activities as $activity)
         loadAttendance({{ $activity->id }});
     @endforeach
-}
 
-initLiveUpdate();
-
-setInterval(initLiveUpdate, 2000);
-
+}, 2000);
 </script>
     
     </body>
