@@ -175,11 +175,7 @@
          style="background-color: #6F8DA6;">
         + New Table
     </button>
-      <button onclick="openScanner(event)"
-        class="text-white px-4 py-2 rounded-lg hover:bg-green-700"
-        style="background-color: #1f4e79;">
-        Scan QR
-    </button>
+      
 </div>
     
 <main>
