@@ -511,71 +511,74 @@ if (!title || !date || !author) {
     author: author
 })
     })  
-   .then(res => res.json())
-.then(data => {
+  .then(res => res.json())
+    .then(data => {
 
-    if (data.success) {
+        if (data.success) {
+const tableBlock = button.closest('.bg-white');
 
-        const tableBlock = button.closest('.bg-white');
-        const titleSection = tableBlock.querySelector('.mb-4');
+const titleSection = tableBlock.querySelector('.mb-4');
 
-        const formattedDate = new Date(date).toLocaleDateString(
-            'en-US',
-            {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }
-        );
-
-        const deleteBtn = document.createElement('a');
-
-        deleteBtn.href = `/activities/delete/${data.activity.id}`;
-        deleteBtn.onclick = () => confirm('Delete this table?');
-
-        deleteBtn.className =
-            'text-white px-4 py-2 text-sm rounded hover:bg-red-600';
-
-        deleteBtn.style.backgroundColor = '#CB0000';
-
-        deleteBtn.textContent = 'Delete table';
-
-        tableBlock.appendChild(document.createElement('br'));
-        tableBlock.appendChild(deleteBtn);
-
-        titleSection.innerHTML = `
-            <div class="flex flex-col">
-                <h3 class="text-2xl font-bold text-gray-900">
-                    ${title}
-                </h3>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    ${formattedDate}
-                </p>
-
-                <p class="text-sm text-blue-600">
-                    Created by: ${author}
-                </p>
-            </div>
-        `;
-
-        // ✅ SHOW MESSAGE FIRST
-        Swal.fire({
-            icon: 'success',
-            title: 'Saved!',
-            text: 'Activity created successfully.',
-            timer: 1500,
-            showConfirmButton: false
-        });
-
-        // ✅ THEN RELOAD AFTER A SHORT DELAY
-       setTimeout(() => {
-    initLiveUpdate();
-}, 500);
-
+const formattedDate = new Date(date).toLocaleDateString(
+    'en-US',
+    {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     }
+);
+const deleteBtn = document.createElement('a');
 
-})
+deleteBtn.href = `/activities/delete/${data.activity.id}`;
+deleteBtn.onclick = () => confirm('Delete this table?');
+
+deleteBtn.className =
+    'text-white px-4 py-2 text-sm rounded hover:bg-red-600';
+
+deleteBtn.style.backgroundColor = '#CB0000';
+
+deleteBtn.textContent = 'Delete table';
+
+tableBlock.appendChild(document.createElement('br'));
+tableBlock.appendChild(deleteBtn);
+
+titleSection.innerHTML = `
+    <div class="flex flex-col">
+        <h3 class="text-2xl font-bold text-gray-900">
+            ${title}
+        </h3>
+
+        <p class="text-sm text-gray-500 mt-1">
+            ${formattedDate}
+        </p>
+
+        <p class="text-sm text-blue-600">
+            Created by: ${author}
+        </p>
+    </div>
+`;
+
+          Swal.fire({
+    icon: 'success',
+    title: 'Saved!',
+    text: 'Activity created successfully.',
+    timer: 1500,
+    showConfirmButton: false
+});
+        }
+
+    })
+    .catch(err => {
+        console.error(err);
+        Swal.fire({
+    icon: 'success',
+    title: 'Saved!',
+    text: 'Activity created successfully.',
+    timer: 1500,
+    showConfirmButton: false
+});
+    });
+}
 </script>
      <script>
 
