@@ -558,12 +558,14 @@ titleSection.innerHTML = `
     </div>
 `;
 
-          Swal.fire({
+     Swal.fire({
     icon: 'success',
     title: 'Saved!',
     text: 'Activity created successfully.',
     timer: 1500,
     showConfirmButton: false
+}).then(() => {
+    window.location.reload();
 });
         }
 
@@ -577,7 +579,7 @@ titleSection.innerHTML = `
     timer: 1500,
     showConfirmButton: false
 });
-        window.location.reload();
+        
     });
 }
 </script>
