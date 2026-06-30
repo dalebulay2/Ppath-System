@@ -511,75 +511,71 @@ if (!title || !date || !author) {
     author: author
 })
     })  
-    .then(res => res.json())
-    .then(data => {
+   .then(res => res.json())
+.then(data => {
 
-        if (data.success) {
-const tableBlock = button.closest('.bg-white');
+    if (data.success) {
 
-const titleSection = tableBlock.querySelector('.mb-4');
+        const tableBlock = button.closest('.bg-white');
+        const titleSection = tableBlock.querySelector('.mb-4');
 
-const formattedDate = new Date(date).toLocaleDateString(
-    'en-US',
-    {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    }
-);
-const deleteBtn = document.createElement('a');
+        const formattedDate = new Date(date).toLocaleDateString(
+            'en-US',
+            {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }
+        );
 
-deleteBtn.href = `/activities/delete/${data.activity.id}`;
-deleteBtn.onclick = () => confirm('Delete this table?');
+        const deleteBtn = document.createElement('a');
 
-deleteBtn.className =
-    'text-white px-4 py-2 text-sm rounded hover:bg-red-600';
+        deleteBtn.href = `/activities/delete/${data.activity.id}`;
+        deleteBtn.onclick = () => confirm('Delete this table?');
 
-deleteBtn.style.backgroundColor = '#CB0000';
+        deleteBtn.className =
+            'text-white px-4 py-2 text-sm rounded hover:bg-red-600';
 
-deleteBtn.textContent = 'Delete table';
+        deleteBtn.style.backgroundColor = '#CB0000';
 
-tableBlock.appendChild(document.createElement('br'));
-tableBlock.appendChild(deleteBtn);
+        deleteBtn.textContent = 'Delete table';
 
-titleSection.innerHTML = `
-    <div class="flex flex-col">
-        <h3 class="text-2xl font-bold text-gray-900">
-            ${title}
-        </h3>
+        tableBlock.appendChild(document.createElement('br'));
+        tableBlock.appendChild(deleteBtn);
 
-        <p class="text-sm text-gray-500 mt-1">
-            ${formattedDate}
-        </p>
+        titleSection.innerHTML = `
+            <div class="flex flex-col">
+                <h3 class="text-2xl font-bold text-gray-900">
+                    ${title}
+                </h3>
 
-        <p class="text-sm text-blue-600">
-            Created by: ${author}
-        </p>
-    </div>
-`;
+                <p class="text-sm text-gray-500 mt-1">
+                    ${formattedDate}
+                </p>
 
-          Swal.fire({
-    icon: 'success',
-    title: 'Saved!',
-    text: 'Activity created successfully.',
-    timer: 1500,
-    showConfirmButton: false
-});
-        }
+                <p class="text-sm text-blue-600">
+                    Created by: ${author}
+                </p>
+            </div>
+        `;
 
-    })
-    .catch(err => {
-        console.error(err);
+        // ✅ SHOW MESSAGE FIRST
         Swal.fire({
-    icon: 'success',
-    title: 'Saved!',
-    text: 'Activity created successfully.',
-    timer: 1500,
-    showConfirmButton: false
-});
-    });
-}
+            icon: 'success',
+            title: 'Saved!',
+            text: 'Activity created successfully.',
+            timer: 1500,
+            showConfirmButton: false
+        });
 
+        // ✅ THEN RELOAD AFTER A SHORT DELAY
+        setTimeout(() => {
+            location.reload();
+        }, 1600);
+
+    }
+
+})
 </script>
      <script>
 
