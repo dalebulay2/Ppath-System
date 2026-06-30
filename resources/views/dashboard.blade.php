@@ -569,9 +569,9 @@ if (!title || !date || !author) {
         });
 
         // ✅ THEN RELOAD AFTER A SHORT DELAY
-        setTimeout(() => {
-            location.reload();
-        }, 1600);
+       setTimeout(() => {
+    initLiveUpdate();
+}, 500);
 
     }
 
