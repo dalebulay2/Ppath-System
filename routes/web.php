@@ -210,7 +210,22 @@ Route::post('/scanner/save', function (Request $request) {
             'message' => $e->getMessage()
 
         ]);
+Route::get('/attendance/live', function () {
 
+    $activities = DB::table('activities')
+        ->orderBy('id','desc')
+        ->get();
+
+    $attendees = DB::table('attendees')
+        ->orderBy('name')
+        ->get();
+
+    return response()->json([
+        'activities'=>$activities,
+        'attendees'=>$attendees
+    ]);
+
+})->middleware('admin.auth');
     }
 
 });
