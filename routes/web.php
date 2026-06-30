@@ -214,3 +214,6 @@ Route::post('/scanner/save', function (Request $request) {
     }
 
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/scanner', [ScannerController::class, 'index']);
+});
