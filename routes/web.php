@@ -215,3 +215,17 @@ Route::post('/scanner/save', function (Request $request) {
 
 });
 
+Route::get('/attendance/live/{activity}', function ($activity) {
+
+    $attendees = DB::table('attendees')
+        ->where('activity_id', $activity)
+        ->get();
+
+    return response()->json([
+        'attendees' => $attendees,
+        'total' => $attendees->count(),
+        'male' => $attendees->where('gender', 'MALE')->count(),
+        'female' => $attendees->where('gender', 'FEMALE')->count()
+    ]);
+
+});
