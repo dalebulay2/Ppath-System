@@ -87,38 +87,31 @@
             padding:15px;
         }
 
-        /* Hide image upload option */
-        #reader__filescan_region{
-            display:none !important;
-        }
-
+        /* Hide image scan option */
+        #reader__filescan_region,
         #reader__dashboard_section_swaplink{
             display:none !important;
         }
 
-        /* Style Start/Stop buttons */
-        #reader button{
-            background:#1f4e79 !important;
-            color:#fff !important;
-            border:none !important;
-            border-radius:6px !important;
-            padding:10px 18px !important;
-            font-size:15px !important;
-            font-weight:600 !important;
-            cursor:pointer !important;
-            transition:.25s;
+        .btn-group{
+            margin-top:15px;
+            text-align:center;
         }
 
-        #reader button:hover{
-            background:#163a5c !important;
+        button{
+            background:#1f4e79;
+            color:#fff;
+            border:none;
+            padding:12px 18px;
+            margin:5px;
+            border-radius:8px;
+            font-size:15px;
+            font-weight:600;
+            cursor:pointer;
         }
 
-        /* Camera dropdown inside scanner */
-        #reader select{
-            width:auto !important;
-            margin-right:10px;
-            border-radius:6px;
-            padding:8px 12px;
+        button:hover{
+            background:#163a5c;
         }
 
         .footer{
@@ -131,23 +124,10 @@
         }
 
         @media(max-width:768px){
-
-            body{
-                padding:15px;
-            }
-
-            .header{
-                padding:20px;
-            }
-
-            .content{
-                padding:20px;
-            }
-
-            .header h1{
-                font-size:24px;
-            }
-
+            body{ padding:15px; }
+            .header{ padding:20px; }
+            .content{ padding:20px; }
+            .header h1{ font-size:24px; }
         }
     </style>
 </head>
@@ -177,6 +157,11 @@
 
         <div id="reader"></div>
 
+        <div class="btn-group">
+            <button id="startBtn">Start Scanning</button>
+            <button id="stopBtn" style="display:none;">Stop Scanning</button>
+        </div>
+
     </div>
 
     <div class="footer">
@@ -187,18 +172,55 @@
 
 <script>
 
+let html5QrCode = new Html5Qrcode("reader");
 let isScanning = false;
+
+document.getElementById("startBtn").addEventListener("click", async () => {
+
+    try {
+        const cameras = await Html5Qrcode.getCameras();
+
+        if (!cameras.length) {
+            alert("No camera found");
+            return;
+        }
+
+        await html5QrCode.start(
+            cameras[0].id,
+            {
+                fps: 10,
+                qrbox: 250
+            },
+            onScanSuccess
+        );
+
+        document.getElementById("startBtn").style.display = "none";
+        document.getElementById("stopBtn").style.display = "inline-block";
+
+    } catch (err) {
+        console.error(err);
+        alert("Camera error: " + err);
+    }
+
+});
+
+document.getElementById("stopBtn").addEventListener("click", async () => {
+
+    await html5QrCode.stop();
+    await html5QrCode.clear();
+
+    document.getElementById("startBtn").style.display = "inline-block";
+    document.getElementById("stopBtn").style.display = "none";
+
+});
 
 function onScanSuccess(decodedText) {
 
     if (isScanning) return;
     isScanning = true;
 
-    console.log("Scanned:", decodedText);
-
     let activity_id = document.getElementById('activity_id').value;
 
-    // Expected format: Name/Gender
     let data = decodedText.split("/");
 
     if (data.length !== 2) {
@@ -222,26 +244,23 @@ function onScanSuccess(decodedText) {
             gender: gender
         })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
 
-        console.log(data);
-
         if (data.success) {
-            alert('Attendance Recorded Successfully');
+            alert("Attendance Recorded Successfully");
         } else {
-            alert(data.message || 'Failed to record attendance');
+            alert(data.message || "Failed");
         }
 
     })
-    .catch(error => {
-        console.error(error);
-        alert("An error occurred while recording attendance.");
+    .catch(err => {
+        console.error(err);
+        alert("Error occurred");
     })
     .finally(() => {
         resetScanner();
     });
-
 }
 
 function resetScanner() {
@@ -249,17 +268,6 @@ function resetScanner() {
         isScanning = false;
     }, 2000);
 }
-
-let html5QrcodeScanner = new Html5QrcodeScanner(
-    "reader",
-    {
-        fps: 10,
-        qrbox: 250,
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-    }
-);
-
-html5QrcodeScanner.render(onScanSuccess);
 
 </script>
 
