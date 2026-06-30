@@ -175,6 +175,11 @@
          style="background-color: #6F8DA6;">
         + New Table
     </button>
+      <button onclick="openScanner(event)"
+        class="text-white px-4 py-2 rounded-lg hover:bg-green-700"
+        style="background-color: #1f4e79;">
+        Scan QR
+    </button>
 </div>
     
 <main>
@@ -580,6 +585,33 @@ titleSection.innerHTML = `
 }
 
 </script>
+        <script>
+            function openScanner(event) {
+    event.preventDefault();
+
+    fetch('/scanner/token', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.token) {
+            window.open('/scanner?token=' + data.token, '_blank');
+        } else {
+            alert('Failed to open scanner');
+        }
+
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Error opening scanner');
+    });
+}
+        </script>
     
     </body>
     </html>
