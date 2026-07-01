@@ -127,4 +127,42 @@ return redirect('/dashboard');
 
     return back()->with('success', 'Password updated successfully.');
 }
+    public function updateAdmin(Request $request)
+{
+    $request->validate([
+        'firstname' => 'required|max:50',
+        'lastname'  => 'required|max:50',
+        'email'     => 'required|email|max:50',
+        'role'      => 'required|in:admin,super_admin',
+        'password'  => 'nullable|min:8'
+    ]);
+
+    // Check if the email is already used by another admin
+    $existing = DB::table('admin')
+        ->where('email', $request->email)
+        ->where('id', '!=', $request->id)
+        ->first();
+
+    if ($existing) {
+        return back()->with('error', 'Email is already in use by another admin.');
+    }
+
+    $data = [
+        'firstname' => $request->firstname,
+        'lastname'  => $request->lastname,
+        'email'     => $request->email,
+        'role'      => $request->role,
+    ];
+
+    // Update password only if a new one was entered
+    if (!empty($request->password)) {
+        $data['password'] = Hash::make($request->password);
+    }
+
+    DB::table('admin')
+        ->where('id', $request->id)
+        ->update($data);
+
+    return back()->with('success', 'User updated successfully.');
+}
 }
