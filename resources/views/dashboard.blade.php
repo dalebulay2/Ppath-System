@@ -9,7 +9,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     </head>
 
-    <body class="bg-gray-100">
+    <body class="bg-gray-100 pt-24">
 
     <style>
     body {
@@ -125,7 +125,7 @@
     }
     </style>
 
-   <nav class="border-b shadow-sm px-8 py-4 flex justify-between items-center"
+<nav class="fixed top-0 left-0 w-full border-b shadow-sm px-8 py-4 flex justify-between items-center z-50"
      style="background-color: #2F4B63;">
 
       <div class="flex items-center gap-2">
