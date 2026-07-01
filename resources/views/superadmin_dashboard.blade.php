@@ -240,51 +240,32 @@
 </td>
 
 <td class="p-2 text-center">
-    <div class="flex justify-center gap-2 items-start">
+   <div class="flex justify-center gap-2 items-start">
 
-        <!-- RESET BUTTON -->
-        <button type="button"
-        onclick="toggleResetForm({{ $admin->id }})"
+    <button
+        type="button"
+        onclick="openEditModal(
+            '{{ $admin->id }}',
+            '{{ $admin->firstname }}',
+            '{{ $admin->lastname }}',
+            '{{ $admin->email }}',
+            '{{ $admin->status }}'
+        )"
         class="text-white px-3 py-1 rounded"
-        style="background-color: #2F4B63;">
-    New Password
-</button>
+        style="background-color:#0E4C92;">
+        Edit User
+    </button>
 
-        <!-- DELETE -->
-     <a href="javascript:void(0)"
-   class="text-white px-3 py-1 rounded inline-block"
-   style="background-color: #CB0000;"
-   onclick="confirmDeleteAdmin('/delete-admin/{{ $admin->id }}')">
-    Delete
-</a>
+    <a href="javascript:void(0)"
+       class="text-white px-3 py-1 rounded"
+       style="background-color:#CB0000;"
+       onclick="confirmDeleteAdmin('/delete-admin/{{ $admin->id }}')">
+        Delete
+    </a>
 
-    </div>
-
+</div>
     <!-- HIDDEN RESET FORM -->
-    <form id="reset-form-{{ $admin->id }}"
-          method="POST"
-          action="/admin/reset-password/{{ $admin->id }}"
-          class="mt-2 hidden flex justify-center gap-2 items-center">
-        @csrf
-
-        <input type="password"
-               name="password"
-               placeholder="New password"
-               class="border px-2 py-1 rounded text-sm w-32">
-
-        <button type="submit"
-            class=" text-white px-3 py-1 rounded text-sm"
-            style="background-color: #0E4C92;">
-            Save
-        </button>
-
-        <!-- CANCEL BUTTON -->
-        <button type="button"
-            onclick="toggleResetForm({{ $admin->id }})"
-            class="bg-gray-400 text-white px-3 py-1 rounded text-sm hover:bg-gray-500">
-            Cancel
-        </button>
-    </form>
+  
 </td>
                
             </tr>
@@ -293,7 +274,121 @@
     </tbody>
 </table>
 </div>
+<div id="editModal"
+     class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
+    <div class="bg-white rounded-lg w-[500px] p-6">
+
+        <h2 class="text-2xl font-bold mb-4">
+            Edit User
+        </h2>
+
+        <form method="POST" action="/update-admin">
+
+            @csrf
+
+            <input
+                type="hidden"
+                name="id"
+                id="edit_id">
+
+            <div class="mb-3">
+
+                <label>First Name</label>
+
+                <input
+                    id="edit_firstname"
+                    name="firstname"
+                    class="border w-full p-2 rounded">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Last Name</label>
+
+                <input
+                    id="edit_lastname"
+                    name="lastname"
+                    class="border w-full p-2 rounded">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Email</label>
+
+                <input
+                    id="edit_email"
+                    name="email"
+                    class="border w-full p-2 rounded">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Status</label>
+
+                <select
+                    id="edit_status"
+                    name="status"
+                    class="border w-full p-2 rounded">
+
+                    <option value="admin">
+                        Admin
+                    </option>
+
+                    <option value="super_admin">
+                        Super Admin
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label>New Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="border w-full p-2 rounded"
+                    placeholder="Leave blank to keep current password">
+
+                <small class="text-gray-500">
+                    Leave blank if you don't want to change the password.
+                </small>
+
+            </div>
+
+            <div class="flex justify-end gap-2">
+
+                <button
+                    type="button"
+                    onclick="closeEditModal()"
+                    class="bg-gray-400 text-white px-4 py-2 rounded">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="text-white px-4 py-2 rounded"
+                    style="background:#0E4C92;">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 </body>
 <script>
     function confirmDeleteAdmin(url) {
@@ -326,5 +421,29 @@ function toggleResetForm(id) {
     }
 }
 </script>
+<script>
+    function openEditModal(id, firstname, lastname, email, status)
+{
+    document.getElementById('edit_id').value = id;
 
+    document.getElementById('edit_firstname').value = firstname;
+
+    document.getElementById('edit_lastname').value = lastname;
+
+    document.getElementById('edit_email').value = email;
+
+    document.getElementById('edit_status').value = status;
+
+    document.getElementById('editModal').classList.remove('hidden');
+
+    document.getElementById('editModal').classList.add('flex');
+}
+
+function closeEditModal()
+{
+    document.getElementById('editModal').classList.remove('flex');
+
+    document.getElementById('editModal').classList.add('hidden');
+}
+</script>
 </html>
