@@ -227,5 +227,6 @@ Route::get('/attendance/live/{activity}', function ($activity) {
     'male' => $attendees->where('gender', 'MALE')->count(),
     'female' => $attendees->where('gender', 'FEMALE')->count()
 ]);
-
+Route::post('/update-admin', [AuthController::class, 'updateAdmin'])
+    ->middleware(['admin.auth', 'super.admin']);
 });
