@@ -169,7 +169,8 @@ Route::get('/delete-admin/{id}', function ($id) {
 })->middleware(['admin.auth', 'super.admin']);
 Route::post('/admin/reset-password/{id}', [AuthController::class, 'resetPassword']);
 
-
+Route::post('/update-admin', [AuthController::class, 'updateAdmin'])
+    ->middleware(['admin.auth', 'super.admin']);
 
 
 Route::get('/scanner', function () {
@@ -227,6 +228,5 @@ Route::get('/attendance/live/{activity}', function ($activity) {
     'male' => $attendees->where('gender', 'MALE')->count(),
     'female' => $attendees->where('gender', 'FEMALE')->count()
 ]);
-Route::post('/update-admin', [AuthController::class, 'updateAdmin'])
-    ->middleware(['admin.auth', 'super.admin']);
+
 });
